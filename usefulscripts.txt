@@ -1,0 +1,4 @@
+* remove all users
+  from social_auth import UserSocialAuth
+  UserSocialAuth.objects.all().delete()
+
