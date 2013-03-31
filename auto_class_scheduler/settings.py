@@ -124,9 +124,10 @@ INSTALLED_APPS = (
 )
 
 # social_auth dependencies
+GOOGLE_OAUTH_EXTRA_SCOPE = ['https://www.googleapis.com/auth/calendar']
 GOOGLE_OAUTH2_CLIENT_ID      = '876852773074-2o3184hkpdchil2q6m899s4aatguna39.apps.googleusercontent.com'
 GOOGLE_OAUTH2_CLIENT_SECRET  = 'zwe7TX17stsEOnB7FeAqQN7E'
-GOOGLE_OAUTH_EXTRA_SCOPE = ['https://www.googleapis.com/auth/calendar']
+
 
 LOGIN_URL          = ''
 LOGIN_REDIRECT_URL = '/logged-in/'

@@ -37,8 +37,9 @@ GOOGLE_OAUTH2_SERVER = 'accounts.google.com'
 GOOGLE_OATUH2_AUTHORIZATION_URL = 'https://accounts.google.com/o/oauth2/auth'
 
 # scope for user email, specify extra scopes in settings, for example:
-# GOOGLE_OAUTH_EXTRA_SCOPE = ['https://www.google.com/m8/feeds/']
+#GOOGLE_OAUTH_EXTRA_SCOPE = ['https://www.google.com/m8/feeds/']
 GOOGLE_OAUTH_SCOPE = ['https://www.googleapis.com/auth/userinfo#email']
+
 GOOGLE_OAUTH2_SCOPE = ['https://www.googleapis.com/auth/userinfo.email',
                        'https://www.googleapis.com/auth/userinfo.profile']
 GOOGLEAPIS_EMAIL = 'https://www.googleapis.com/userinfo/email'
