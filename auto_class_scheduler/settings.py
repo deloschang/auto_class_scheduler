@@ -111,6 +111,9 @@ TEMPLATE_DIRS = (
 
 INSTALLED_APPS = (
     'social_auth',
+    'oauth2',
+    'httplib2',
+    'openid',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
