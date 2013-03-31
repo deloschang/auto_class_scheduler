@@ -5,7 +5,10 @@ def home(request):
     return render_to_response("main.html")
 
 def loggedin(request):
+    # retrieve the token first 
     tokens = UserSocialAuth.get_social_auth_for_user(request.user).get().tokens
+
+
     return render_to_response("logged-in.html", {'tokens': tokens})
     
 
