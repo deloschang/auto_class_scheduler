@@ -128,10 +128,23 @@ GOOGLE_OAUTH_EXTRA_SCOPE = ['https://www.googleapis.com/auth/calendar']
 GOOGLE_OAUTH2_CLIENT_ID      = '876852773074-2o3184hkpdchil2q6m899s4aatguna39.apps.googleusercontent.com'
 GOOGLE_OAUTH2_CLIENT_SECRET  = 'zwe7TX17stsEOnB7FeAqQN7E'
 
-
-LOGIN_URL          = ''
-LOGIN_REDIRECT_URL = '/logged-in/'
+LOGIN_URL          = '/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/logged-in/'
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/logged-in/' 
 LOGIN_ERROR_URL    = '/login-error/'
+
+SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
+SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_auth.backends.pipeline.social.social_auth_user',
+    #'social_auth.backends.pipeline.associate.associate_by_email',
+    'social_auth.backends.pipeline.user.get_username',
+    'social_auth.backends.pipeline.user.create_user',
+    'social_auth.backends.pipeline.social.associate_user',
+    'social_auth.backends.pipeline.social.load_extra_data',
+    'social_auth.backends.pipeline.user.update_user_details'
+)
 
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.twitter.TwitterBackend',
