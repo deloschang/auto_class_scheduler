@@ -144,8 +144,15 @@ def scraper2(request):
     parser = HTMLParser(tree=treebuilders.getTreeBuilder("beautifulsoup"))
     soup = parser.parse(html)
     tbody = soup.find('th', text='Term').parent.parent.parent
-    
-    return render_to_response("scraper.html", {'soup': tbody})
+
+    parsed = tbody.findAll('tr')
+
+    # loop through each item 
+    for i in range(1, len(parsed)):
+        read = tbody.findAll('tr')[i]('td')
+        print read
+
+    return render_to_response("scraper.html", {'soup': read})
 
 
     
