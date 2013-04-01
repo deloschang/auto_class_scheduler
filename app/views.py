@@ -9,13 +9,21 @@ from oauth2client.client import AccessTokenCredentials
 import json 
 import httplib2
 
+
+# scraper
+import urllib
+import urllib2
+import cookielib
+from html5lib import HTMLParser, treebuilders
+
+
 def home(request):
     return render_to_response("main.html")
 
 def loggedin(request):
-    # retrieve the token first 
     link = UserSocialAuth.get_social_auth_for_user(request.user).get().tokens
 
+    # retrieve the token first 
     if 'access_token' in link:
         access_token = link['access_token']
 
@@ -80,6 +88,57 @@ def loggedin(request):
 
     else: 
         return render_to_response("main.html")
+
+# course-watch modified scraper
+def scraper(request):
+    post_data = {
+            'classyear' : '2008', # why??
+            'subj': 'COSC',
+            'crsenum': '50'
+        }
+    url = 'http://oracle-www.dartmouth.edu/dart/groucho/timetable.course_quicksearch'
+
+    
+    # scrape the html
+    cj = cookielib.LWPCookieJar()
+    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+    urllib2.install_opener(opener)
+    headers =  {'User-agent' : 'Mozilla/c.0 (compatible; MSIE 5.5; Windows NT)'}
+    request = urllib2.Request(url, urllib.urlencode(post_data), headers)
+    handle = urllib2.urlopen(request)
+    html = handle.read()
+
+    # parse for the dept and course number
+    parser = HTMLParser(tree=treebuilders.getTreeBuilder("beautifulsoup"))
+    soup = parser.parse(html)
+    #tbody = soup.find('th', text='Term').parent.parent.parent
+    #soup = tbody.findAll('tr')[2]('td')
+    
+
+    return render_to_response("scraper.html", {'soup': soup})
+
+def scraper2(request):
+    url = 'http://oracle-www.dartmouth.edu/dart/groucho/timetable.display_courses'
+    parameters = 'crnl=no_value&distribradio=alldistribs&depts=no_value&periods=no_value&distribs=no_value&distribs_i=no_value&distribs_wc=no_value&pmode=public&term=&levl=&fys=n&wrt=n&pe=n&review=n&classyear=2008&searchtype=Subject+Area%28s%29&termradio=selectterms&terms=no_value&terms=201303&subjectradio=allsubjects&hoursradio=allhours&sortorder=dept'
+
+    headers = {"Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Encoding":"gzip, deflate",
+        "Accept-Language":"en-US,en;q=0.5",
+        "Connection":"keep-alive",
+        "Host":"oracle-www.dartmouth.edu",
+        "Referer":"http://oracle-www.dartmouth.edu/dart/groucho/timetable.subject_search",
+        "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:19.0) Gecko/20100101 Firefox/19.0"
+    }
+	
+    req = urllib2.Request(url, parameters, headers)
+    response = urllib2.urlopen(req)
+
+    read =  response.read()
+    
+    return render_to_response("scraper.html", {'soup': read})
+
+
+    
 
 
 

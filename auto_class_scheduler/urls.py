@@ -8,6 +8,9 @@ urlpatterns = patterns('',
     # Examples:
      url(r'^$', 'app.views.home', name='home'),
      url(r'^logged-in/$', 'app.views.loggedin', name='loggedin'),
+     url(r'^scraper/$', 'app.views.scraper', name='scraper'),
+     url(r'^scraper2/$', 'app.views.scraper2', name='scraper2'),
+
      url(r'', include('social_auth.urls')),
 
     # url(r'^auto_class_scheduler/', include('auto_class_scheduler.foo.urls')),
