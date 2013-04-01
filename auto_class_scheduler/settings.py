@@ -1,3 +1,4 @@
+from settings_local import *
 # Django settings for auto_class_scheduler project.
 
 DEBUG = True
