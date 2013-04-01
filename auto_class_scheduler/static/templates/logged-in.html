@@ -2,10 +2,10 @@
 
 
 {% block content %}
+<div style="background-color:white;">
 <div id="top_container">
 
-
-  <span id="logo_tutorial"><img src="{{ STATIC_URL }}images/intro_logo.png"/></span>
+  <span id="logo_tutorial"><img src="{{ STATIC_URL }}images/intro_logo.png" ></span>
 
   <p id="top_instruction" class="lead">Welcome!</p>
 
@@ -45,92 +45,14 @@
     <!--<div class="text-info">We will never post without your permission.</div>-->
   <!--</span>-->
 
-  <style>
-
-.uncatmemesbreak img{
-  display: block;
-  width: 200px;
-
-}
-
-.text_in_arrow{
-  color: white;
-  text-align: center;
-  font-size: 27px;
-  line-height: 27px;
-  font-weight: bold;
-  text-transform: uppercase;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-}
-
-.arrow_box {
-  position: relative;
-  background: #88b7d5;
-  border: 4px solid #c2e1f5;
-}
-.arrow_box:after, .arrow_box:before {
-  left: 100%;
-  border: solid transparent;
-  content: " ";
-  height: 0;
-  width: 0;
-  position: absolute;
-  pointer-events: none;
-}
-
-.arrow_box:after {
-  border-color: rgba(136, 183, 213, 0);
-  border-left-color: #88b7d5;
-  border-width: 30px;
-  top: 50%;
-  margin-top: -30px;
-}
-.arrow_box:before {
-  border-color: rgba(194, 225, 245, 0);
-  border-left-color: #c2e1f5;
-  border-width: 36px;
-  top: 50%;
-  margin-top: -36px;
-}
-
-
-.left_arrow_box {
-  position: relative;
-  background: #88b7d5;
-  border: 4px solid #c2e1f5;
-}
-.left_arrow_box:after, .arrow_box:before {
-  right: 100%;
-  border: solid transparent;
-  content: " ";
-  height: 0;
-  width: 0;
-  position: absolute;
-  pointer-events: none;
-}
-
-.left_arrow_box:after {
-  border-color: rgba(136, 183, 213, 0);
-  border-right-color: #88b7d5;
-  border-width: 30px;
-  top: 50%;
-  margin-top: -30px;
-}
-.left_arrow_box:before {
-  border-color: rgba(194, 225, 245, 0);
-  border-right-color: #c2e1f5;
-  border-width: 36px;
-  top: 50%;
-  margin-top: -36px;
-}
-
-  </style>
+</div>
 </div>
 
 <style>
+
   html {
     height: 100%;
-    background: url({{ STATIC_URL }}images/grey.png) repeat;
+    /*background: url({{ STATIC_URL }}images/grey.png) repeat;*/
   }
 
   #top_container {
@@ -164,6 +86,7 @@
     width: 1000px;
     right: 200px;
   }
+
   /* limits the number of people */
    .ui-autocomplete {
         max-height: 200px;
@@ -186,6 +109,7 @@
 
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
 <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+
 <script>
 {# functions needs to be written inline because of access_token parameter #}
 $(function() {

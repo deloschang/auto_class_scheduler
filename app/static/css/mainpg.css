@@ -1,6 +1,11 @@
 /***** Newest CSS - do not delete ****/
 
 
+  html {
+    height: 100%;
+    background: url({{ STATIC_URL }}images/grey.png) repeat;
+  }
+
   /* limits the number of people */
    .ui-autocomplete {
         max-height: 200px;
@@ -346,7 +351,6 @@
 	html{
 		font-family: Trebuchet, Helvetica, sans-serif;
 		font-size:.8em;
-		background-color:rgb(245,243,244);
 		min-width:768px;
 		text-align:center;
 		margin-left:auto;
