@@ -102,7 +102,7 @@ def tutorial_class_input(request):
         period = find_class_period(dept_abbr, coursenum)
 
         # found class time, now process and add to the calendar
-        insert_to_calendar(user, class_name)
+        insert_to_calendar(user, class_name, period)
 
 
 
@@ -112,7 +112,7 @@ def tutorial_class_input(request):
 
 # user to schedule for
 # class_name e.g. ART 1
-def insert_to_calendar(user, class_name):
+def insert_to_calendar(user, class_name, period):
     # grab access token
     link = UserSocialAuth.get_social_auth_for_user(user).get().tokens
     access_token = link['access_token']
@@ -123,26 +123,83 @@ def insert_to_calendar(user, class_name):
     http = credentials.authorize(http)
     service = build('calendar', 'v3', http=http)
 
+    # check the date and time for this period
+    response = check_period_time(period)
+
     # create the event
+    #event = {
+      #'summary': class_name,
+      #'description': class_name,
+      #'start' : { 
+          #'dateTime' : "2013-04-01T15:00:00.000",
+          #'timeZone' : "Europe/Zurich"
+      #},
+      #'end' : { 
+          #'dateTime' : "2013-04-01T17:00:00.000",
+          #'timeZone' : "Europe/Zurich"
+      #},
+      #'recurrence' : [
+          #'RRULE:FREQ=WEEKLY;BYDAY=Mo,We,Fr;UNTIL=20130603',
+      #],
+    #}
+
     event = {
       'summary': class_name,
       'description': class_name,
       'start' : { 
-          'dateTime' : "2013-04-01T15:00:00.000",
+          'dateTime' : "2013-04-01T"+response[1],
           'timeZone' : "Europe/Zurich"
       },
       'end' : { 
-          'dateTime' : "2013-04-01T17:00:00.000",
+          'dateTime' : "2013-04-01T"+response[2],
           'timeZone' : "Europe/Zurich"
       },
       'recurrence' : [
-          'RRULE:FREQ=WEEKLY;BYDAY=Mo,We,Fr;UNTIL=20130603',
+          'RRULE:FREQ=WEEKLY;BYDAY='+response[0]+';UNTIL=20130603',
       ],
     }
 
+    print event
     created_event = service.events().insert(calendarId='primary', body=event).execute()
 
     print "Created Event: %s" % created_event['id']
+
+def check_period_time(period):
+    response = []
+    print period
+
+    if period.encode('utf-8') == str(12):
+        response.insert(0, "Mo,We,Fr")
+        response.insert(1, "12:30:00.000")
+        response.insert(2, "13:35:00.000")
+
+
+    ## list of classes
+    #if period == 9L:
+
+    #elif period == 10:
+
+    #elif period == 11:
+
+    #elif period == 12:
+
+    #elif period == 2:
+
+    #elif period == '10A':
+
+    #elif period == '2A':
+
+    #elif period == 8:
+
+    #elif period == '9S':
+
+    # handle the edge case with manually entered date times
+
+    print response
+    return response
+
+
+
 
 # helper that scrapes for the class period
 def find_class_period(dept_abbr, course_num):
