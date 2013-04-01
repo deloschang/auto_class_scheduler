@@ -85,10 +85,58 @@ def tutorial_class_input(request):
     # Tutorial: user just entered class
     if request.method == 'POST':
         class_name = strip_tags(request.POST['class_name'])
-        print class_name
+        info = class_name.split(' ')
 
-        return render_to_response("confirmation.html", {'class_name':class_name}, RequestContext(request))
+        dept_abbr = info[0]
+        coursenum = info[1]
 
+        # we need class time
+        period = find_class_period(dept_abbr, coursenum)
+
+
+        # process the class name and add to the calendar
+        # scrape for the class
+
+        return render_to_response("confirmation.html", {'class_name':class_name, 'period':period}, RequestContext(request))
+
+
+def find_class_period(dept_abbr, course_num):
+    # define
+    post_data = {
+            'classyear' : '2008', # why??
+            'subj': dept_abbr,
+            'crsenum': course_num,
+            }
+    url = 'http://oracle-www.dartmouth.edu/dart/groucho/timetable.course_quicksearch'
+
+    # scrape the html
+    cj = cookielib.LWPCookieJar()
+    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+    urllib2.install_opener(opener)
+    headers =  {'User-agent' : 'Mozilla/c.0 (compatible; MSIE 5.5; Windows NT)'}
+    request = urllib2.Request(url, urllib.urlencode(post_data), headers)
+    handle = urllib2.urlopen(request)
+    html = handle.read()
+
+    # parse for the dept and course number
+    parser = HTMLParser(tree=treebuilders.getTreeBuilder("beautifulsoup"))
+    soup = parser.parse(html)
+    tbody = soup.find('th', text='Term').parent.parent.parent
+    cells = tbody.findAll('tr')[2]('td')
+
+    # sometimes there is a listing like Tu 3:00PM-6:00PM.
+    try: 
+        period = cells[7].contents[0].contents[0]
+    except AttributeError:
+        period = cells[7].contents[0]
+    
+    #enrolled = int(cells[-2].contents[0])
+    #capacity = int(cells[-3].contents[0])
+    #available = capacity - enrolled
+    #print "%i spaces left (capacity of %i with %i enrolled)" % (available, capacity, enrolled)
+
+    return period
+    
 
 
 # course-watch modified scraper
@@ -120,7 +168,7 @@ def scraper(request):
     return render_to_response("scraper.html", {'soup': soup})
 
 # tidying: http://valet.htmlhelp.com/tidy/tidy.cgi
-# scrapes the course listing
+# scrapes the entire course listing (in case we want to load it into the database)
 def scraper2(request):
     #url = 'http://oracle-www.dartmouth.edu/dart/groucho/timetable.display_courses'
     #parameters = 'crnl=no_value&distribradio=alldistribs&depts=no_value&periods=no_value&distribs=no_value&distribs_i=no_value&distribs_wc=no_value&pmode=public&term=&levl=&fys=n&wrt=n&pe=n&review=n&classyear=2008&searchtype=Subject+Area%28s%29&termradio=selectterms&terms=no_value&terms=201303&subjectradio=allsubjects&hoursradio=allhours&sortorder=dept'
