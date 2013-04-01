@@ -149,10 +149,29 @@ def scraper2(request):
 
     # loop through each item 
     for i in range(1, len(parsed)):
-        read = tbody.findAll('tr')[i]('td')
-        print read
+        cells = parsed[i]('td')
 
-    return render_to_response("scraper.html", {'soup': read})
+        # sometimes the dept isn't hyperlinked
+        try:
+            subj = cells[2].contents[0].contents[0]
+        except AttributeError:
+            subj = cells[2].contents[0]
+
+        coursenum = cells[3].contents[0]
+        title = cells[6].contents[0].contents[0]
+
+        # sometimes there is a listing like Tu 3:00PM-6:00PM.
+        try: 
+            period = cells[8].contents[0].contents[0]
+        except AttributeError:
+            period = cells[8].contents[0]
+
+        print subj
+        print coursenum
+        print title
+        print period
+
+    return render_to_response("scraper.html", {'soup': title})
 
 
     
