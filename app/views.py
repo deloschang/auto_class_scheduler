@@ -14,66 +14,72 @@ def home(request):
 
 def loggedin(request):
     # retrieve the token first 
-    access_token = UserSocialAuth.get_social_auth_for_user(request.user).get().tokens['access_token']
+    link = UserSocialAuth.get_social_auth_for_user(request.user).get().tokens
 
-    # OAuth dance
-    credentials = AccessTokenCredentials(access_token, 'my-user-agent/1.0')
-    http = httplib2.Http()
-    http = credentials.authorize(http)
-    service = build('calendar', 'v3', http=http)
+    if 'access_token' in link:
+        access_token = link['access_token']
 
-
-    # Snippet that lists all calendar events
-    #request = service.events().list(calendarId='primary')
-    
-    #while request != None:
-      ## Get the next page.
-      #response = request.execute()
-      ## Accessing the response like a dict object with an 'items' key
-      ## returns a list of item objects (events).
-      #for event in response.get('items', []):
-        ## The event object is a dict object with a 'summary' key.
-        #print repr(event.get('summary', 'NO SUMMARY')) + '\n'
-      ## Get the next request object by passing the previous request object to
-      ## the list_next method.
-      #request = service.events().list_next(request, response)
-
-    #except AccessTokenRefreshError:
-    ## The AccessTokenRefreshError exception is raised if the credentials
-    ## have been revoked by the user or they have expired.
-    #print ('The credentials have been revoked or expired, please re-run'
-           #'the application to re-authorize')
-
-    # working event
-    event = {
-      'summary': "summary",
-      'description': "description",
-      'start' : { 'dateTime' : "2013-04-01T15:00:00.000Z"},
-      'end' : { 'dateTime' : "2013-04-01T17:00:00.000Z"}
-    }
+        # OAuth dance
+        credentials = AccessTokenCredentials(access_token, 'my-user-agent/1.0')
+        http = httplib2.Http()
+        http = credentials.authorize(http)
+        service = build('calendar', 'v3', http=http)
 
 
-    #payload = json.dumps(event)
+        # Snippet that lists all calendar events
+        #request = service.events().list(calendarId='primary')
+        
+        #while request != None:
+          ## Get the next page.
+          #response = request.execute()
+          ## Accessing the response like a dict object with an 'items' key
+          ## returns a list of item objects (events).
+          #for event in response.get('items', []):
+            ## The event object is a dict object with a 'summary' key.
+            #print repr(event.get('summary', 'NO SUMMARY')) + '\n'
+          ## Get the next request object by passing the previous request object to
+          ## the list_next method.
+          #request = service.events().list_next(request, response)
 
-    created_event = service.events().insert(calendarId='primary', body=event).execute()
+        #except AccessTokenRefreshError:
+        ## The AccessTokenRefreshError exception is raised if the credentials
+        ## have been revoked by the user or they have expired.
+        #print ('The credentials have been revoked or expired, please re-run'
+               #'the application to re-authorize')
 
-    #response = urlfetch.fetch(
-        #"https://www.google.com/calendar/feeds/default/private/full",
-        #method=urlfetch.POST,
-        #payload=payload,
-        #headers = {"Content-Type": "application/json",
-                   #"Authorization": "OAuth " + tokens})
-
-    #if response.status_code == 201:
-        #result = simplejson.loads(response.content)
-        #logging.info("Status code was %s, and the returned event looks like %s", response.status_code, result)
-        #return
-    #raise Exception("Call failed. Status code %s. Body %s",
-                #response.status_code, response.content)
+        # working event
+        event = {
+          'summary': "summary",
+          'description': "description",
+          'start' : { 'dateTime' : "2013-04-01T15:00:00.000Z"},
+          'end' : { 'dateTime' : "2013-04-01T17:00:00.000Z"}
+        }
 
 
-    print "Created Event: %s" % created_event['id']
-    return render_to_response("logged-in.html", {'access_token': access_token})
+        #payload = json.dumps(event)
+
+        created_event = service.events().insert(calendarId='primary', body=event).execute()
+
+        #response = urlfetch.fetch(
+            #"https://www.google.com/calendar/feeds/default/private/full",
+            #method=urlfetch.POST,
+            #payload=payload,
+            #headers = {"Content-Type": "application/json",
+                       #"Authorization": "OAuth " + tokens})
+
+        #if response.status_code == 201:
+            #result = simplejson.loads(response.content)
+            #logging.info("Status code was %s, and the returned event looks like %s", response.status_code, result)
+            #return
+        #raise Exception("Call failed. Status code %s. Body %s",
+                    #response.status_code, response.content)
+
+
+        print "Created Event: %s" % created_event['id']
+        return render_to_response("logged-in.html", {'access_token': access_token})
+
+    else: 
+        return render_to_response("main.html")
 
 
 
