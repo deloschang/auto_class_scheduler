@@ -23,6 +23,7 @@ from django.utils.html import strip_tags # sanitize
 
 
 
+# if logged in already, redirect to the main
 def home(request):
     try: 
         link = UserSocialAuth.get_social_auth_for_user(request.user).get().tokens
@@ -82,7 +83,7 @@ def loggedin(request):
         #created_event = service.events().insert(calendarId='primary', body=event).execute()
 
         #print "Created Event: %s" % created_event['id']
-        return render_to_response("logged-in.html", {'access_token': access_token}, RequestContext(request))
+        return render_to_response("logged-in.html", RequestContext(request))
 
     except: 
         return render_to_response("main.html", RequestContext(request))
@@ -96,16 +97,54 @@ def tutorial_class_input(request):
         dept_abbr = info[0]
         coursenum = info[1]
 
-        # we need class time
+        # scrape for the class period
+        user = request.user
         period = find_class_period(dept_abbr, coursenum)
 
+        # found class time, now process and add to the calendar
+        insert_to_calendar(user, class_name)
 
-        # process the class name and add to the calendar
-        # scrape for the class
+
+
 
         return render_to_response("confirmation.html", {'class_name':class_name, 'period':period}, RequestContext(request))
 
 
+# user to schedule for
+# class_name e.g. ART 1
+def insert_to_calendar(user, class_name):
+    # grab access token
+    link = UserSocialAuth.get_social_auth_for_user(user).get().tokens
+    access_token = link['access_token']
+
+    # OAuth dance
+    credentials = AccessTokenCredentials(access_token, 'my-user-agent/1.0')
+    http = httplib2.Http()
+    http = credentials.authorize(http)
+    service = build('calendar', 'v3', http=http)
+
+    # create the event
+    event = {
+      'summary': class_name,
+      'description': class_name,
+      'start' : { 
+          'dateTime' : "2013-04-01T15:00:00.000",
+          'timeZone' : "Europe/Zurich"
+      },
+      'end' : { 
+          'dateTime' : "2013-04-01T17:00:00.000",
+          'timeZone' : "Europe/Zurich"
+      },
+      'recurrence' : [
+          'RRULE:FREQ=WEEKLY;BYDAY=Mo,We,Fr;UNTIL=20130603',
+      ],
+    }
+
+    created_event = service.events().insert(calendarId='primary', body=event).execute()
+
+    print "Created Event: %s" % created_event['id']
+
+# helper that scrapes for the class period
 def find_class_period(dept_abbr, course_num):
     # define
     post_data = {
