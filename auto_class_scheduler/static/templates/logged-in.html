@@ -2,11 +2,12 @@
 
 
 {% block content %}
+
 <div id="top_container">
+  {% block logo %}{% endblock %}
 
   <span id="logo_tutorial"><img src="{{ STATIC_URL }}images/intro_logo.png" style="width: 600px;"></span>
-
-  <p id="top_instruction" class="lead">Welcome!</p>
+  <p id="top_instruction" class="lead" >Welcome!</p>
 
 
   <p id="lower_instruction" class="text-info" style="padding-top:10px;">Timely is the easiest way to schedule courses</p>
@@ -24,8 +25,8 @@
       </div>
     </form>
   </div>
-
 </div>
+
 
 <style>
 

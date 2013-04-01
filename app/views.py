@@ -105,8 +105,6 @@ def tutorial_class_input(request):
         insert_to_calendar(user, class_name, period)
 
 
-
-
         return render_to_response("confirmation.html", {'class_name':class_name, 'period':period}, RequestContext(request))
 
 
