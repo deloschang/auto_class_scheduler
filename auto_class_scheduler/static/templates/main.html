@@ -2,7 +2,7 @@
 
 {% block content %}
 <p id="top_instruction" class="lead">
-  <a href="{% url socialauth_begin 'google-oauth2' %}" class="google_login_button">Login with Google </a>
+  <a href="{% url 'socialauth_begin' 'google-oauth2' %}" class="google_login_button">Login with Google </a>
 </p>
 
 {% endblock %}
