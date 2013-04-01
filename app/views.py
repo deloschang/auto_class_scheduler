@@ -166,36 +166,62 @@ def insert_to_calendar(user, class_name, period):
 
 def check_period_time(period):
     response = []
-    print period
 
-    if period.encode('utf-8') == str(12):
+    period = period.encode('utf-8')
+
+    ## list of classes
+    if period == '12':
         response.insert(0, "Mo,We,Fr")
         response.insert(1, "12:30:00.000")
         response.insert(2, "13:35:00.000")
 
+    elif period == '9L': 
+        response.insert(0, "Mo,We,Fr")
+        response.insert(1, "8:45:00.000")
+        response.insert(2, "9:50:00.000")
 
-    ## list of classes
-    #if period == 9L:
+    elif period == '10':
+        response.insert(0, "Mo,We,Fr")
+        response.insert(1, "10:00:00.000")
+        response.insert(2, "11:05:00.000")
+        
+    elif period == '11':
+        response.insert(0, "Mo,We,Fr")
+        response.insert(1, "11:15:00.000")
+        response.insert(2, "12:20:00.000")
 
-    #elif period == 10:
+    elif period == '2':
+        response.insert(0, "Mo,We,Fr")
+        response.insert(1, "13:45:00.000")
+        response.insert(2, "14:50:00.000")
 
-    #elif period == 11:
+    elif period == '10A':
+        response.insert(0, "Tu,Th")
+        response.insert(1, "10:00:00.000")
+        response.insert(2, "11:50:00.000")
 
-    #elif period == 12:
+    elif period == '2A':
+        response.insert(0, "Tu,Th")
+        response.insert(1, "14:00:00.000")
+        response.insert(2, "15:50:00.000")
 
-    #elif period == 2:
+    elif period == '8':
+        response.insert(0, "Mo,Tu,Th,Fr")
+        response.insert(1, "7:45:00.000")
+        response.insert(2, "8:35:00.000")
 
-    #elif period == '10A':
+    elif period == '9S':
+        response.insert(0, "Mo,Tu,Th,Fr")
+        response.insert(1, "9:00:00.000")
+        response.insert(2, "9:50:00.000")
 
-    #elif period == '2A':
-
-    #elif period == 8:
-
-    #elif period == '9S':
-
+    # 3A 
+    elif period == '3B':
+        response.insert(0, "Tu,Th")
+        response.insert(1, "4:00:00.000")
+        response.insert(2, "5:50:00.000")
     # handle the edge case with manually entered date times
 
-    print response
     return response
 
 
