@@ -123,6 +123,11 @@ def insert_to_calendar(user, class_name, period):
     http = credentials.authorize(http)
     service = build('calendar', 'v3', http=http)
 
+
+    # short-circuit special arrangements
+    if period.encode('utf-8') == 'AR':
+        return
+
     # check the date and time for this period
     response = check_period_time(period)
 
