@@ -16,7 +16,7 @@
   <a href="javascript:;" id="start_me" class="btn btn-success">Let's start</a>
 
   <div id="friend_div" style="display:none;">
-    <form action="{% url app_tutorial_class_input %}" method="post" id="friend_form" class="form_search">
+    <form action="{% url 'app_tutorial_class_input' %}" method="post" id="friend_form" class="form_search">
       {% csrf_token %}
       <div class="input-append">
         <input name='class_name' class="input-large" style="width:200px;" type="text" placeholder="e.g. ART 1" id="autocomplete-input" />
