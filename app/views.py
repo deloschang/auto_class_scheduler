@@ -38,18 +38,18 @@ def loggedin(request):
       ## the list_next method.
       #request = service.events().list_next(request, response)
 
-    # adding test event
-    event = {"data":{
-        "title": "Test Event",
-        "details": "Details of test event",
-        "transparency": "opaque",
-        "status": "confirmed",
-        "location": "My Place",
-        "when": [{
-            "start": "2013-04-01T15:00:00.000Z",
-            "end": "2013-04-01T17:00:00.000Z"
-            }]
-        }
+    #except AccessTokenRefreshError:
+    ## The AccessTokenRefreshError exception is raised if the credentials
+    ## have been revoked by the user or they have expired.
+    #print ('The credentials have been revoked or expired, please re-run'
+           #'the application to re-authorize')
+
+    # working event
+    event = {
+      'summary': "summary",
+      'description': "description",
+      'start' : { 'dateTime' : "2013-04-01T15:00:00.000Z"},
+      'end' : { 'dateTime' : "2013-04-01T17:00:00.000Z"}
     }
 
 
@@ -72,7 +72,8 @@ def loggedin(request):
                 #response.status_code, response.content)
 
 
-    return render_to_response("logged-in.html", {'tokens': tokens})
+    print "Created Event: %s" % created_event['id']
+    return render_to_response("logged-in.html", {'access_token': access_token})
 
 
 
