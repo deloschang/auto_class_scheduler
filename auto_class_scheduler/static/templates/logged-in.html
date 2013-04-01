@@ -1,6 +1,11 @@
 You're logged in!
 
-<div>
-  Token if successful:
-  {{ access_token }}
-</div>
+{% extends 'base.html' %}
+
+
+{% block content %}
+  <div>
+    Token if successful:
+    {{ access_token }}
+  </div>
+{% endblock %}

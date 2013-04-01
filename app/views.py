@@ -1,5 +1,8 @@
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 from social_auth.models import UserSocialAuth
+
+from django.contrib.auth.decorators import login_required
 
 
 # build the api
@@ -20,6 +23,7 @@ from html5lib import HTMLParser, treebuilders
 def home(request):
     return render_to_response("main.html")
 
+@login_required
 def loggedin(request):
     link = UserSocialAuth.get_social_auth_for_user(request.user).get().tokens
 
@@ -66,28 +70,13 @@ def loggedin(request):
 
         #payload = json.dumps(event)
 
-        created_event = service.events().insert(calendarId='primary', body=event).execute()
+        #created_event = service.events().insert(calendarId='primary', body=event).execute()
 
-        #response = urlfetch.fetch(
-            #"https://www.google.com/calendar/feeds/default/private/full",
-            #method=urlfetch.POST,
-            #payload=payload,
-            #headers = {"Content-Type": "application/json",
-                       #"Authorization": "OAuth " + tokens})
-
-        #if response.status_code == 201:
-            #result = simplejson.loads(response.content)
-            #logging.info("Status code was %s, and the returned event looks like %s", response.status_code, result)
-            #return
-        #raise Exception("Call failed. Status code %s. Body %s",
-                    #response.status_code, response.content)
-
-
-        print "Created Event: %s" % created_event['id']
-        return render_to_response("logged-in.html", {'access_token': access_token})
+        #print "Created Event: %s" % created_event['id']
+        return render_to_response("logged-in.html", {'access_token': access_token}, RequestContext(request))
 
     else: 
-        return render_to_response("main.html")
+        return render_to_response("main.html", RequestContext(request))
 
 # course-watch modified scraper
 def scraper(request):

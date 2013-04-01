@@ -68,6 +68,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    '/Users/deloschang/Documents/self_projects/auto_class_scheduler/app/static/',
 )
 
 # List of finder classes that know how to find static files in
@@ -199,3 +200,28 @@ LOGGING = {
         },
     }
 }
+
+# common context processors
+TEMPLATE_CONTEXT_PROCESSORS = (
+    # default processors
+    'django.core.context_processors.static',
+    'django.core.context_processors.media',
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.tz',
+    'django.contrib.messages.context_processors.messages',
+
+    #'webapp.processor.analytics', # left later for analytics
+
+    # social_auth
+    'social_auth.context_processors.social_auth_by_name_backends',
+    'social_auth.context_processors.social_auth_backends',
+    'social_auth.context_processors.social_auth_by_type_backends',
+    'social_auth.context_processors.social_auth_login_redirect',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS += (
+    'django.core.context_processors.request',
+)
+
