@@ -10,6 +10,7 @@ urlpatterns = patterns('',
      url(r'^logged-in/$', 'app.views.loggedin', name='loggedin'),
      url(r'^scraper/$', 'app.views.scraper', name='scraper'),
      url(r'^scraper2/$', 'app.views.scraper2', name='scraper2'),
+     url(r'^welcome/$', 'app.views.tutorial_class_input', name='app_tutorial_class_input'),
 
      url(r'', include('social_auth.urls')),
 

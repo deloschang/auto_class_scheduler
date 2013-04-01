@@ -19,6 +19,9 @@ import urllib2
 import cookielib
 from html5lib import HTMLParser, treebuilders
 
+from django.utils.html import strip_tags # sanitize
+
+
 
 def home(request):
     return render_to_response("main.html")
@@ -77,6 +80,16 @@ def loggedin(request):
 
     else: 
         return render_to_response("main.html", RequestContext(request))
+
+def tutorial_class_input(request):
+    # Tutorial: user just entered class
+    if request.method == 'POST':
+        class_name = strip_tags(request.POST['class_name'])
+        print class_name
+
+        return render_to_response("confirmation.html", {'class_name':class_name}, RequestContext(request))
+
+
 
 # course-watch modified scraper
 def scraper(request):
