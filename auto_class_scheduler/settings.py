@@ -113,7 +113,6 @@ INSTALLED_APPS = (
     'social_auth',
     'oauth2',
     'httplib2',
-    'openid',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -129,7 +128,6 @@ INSTALLED_APPS = (
 # social_auth dependencies
 GOOGLE_OAUTH_EXTRA_SCOPE = ['https://www.googleapis.com/auth/calendar']
 GOOGLE_OAUTH2_CLIENT_ID      = '876852773074-2o3184hkpdchil2q6m899s4aatguna39.apps.googleusercontent.com'
-GOOGLE_OAUTH2_CLIENT_SECRET  = 'zwe7TX17stsEOnB7FeAqQN7E'
 
 LOGIN_URL          = '/'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/logged-in/'
