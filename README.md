@@ -6,6 +6,10 @@ FEATURES
 
 INSTALLATION
  * Use pip install -r requirements.txt
+ * Setup env variables for settings via EXPORT
+      -  Google OAuth2 ClientID
+      -  Google OAuth2 Client Secret
+      -  Template Dirs
 
 TODO
  * Create AJAX input box to enter class names

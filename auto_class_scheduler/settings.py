@@ -1,4 +1,5 @@
-from settings_local import *
+import os
+
 # Django settings for auto_class_scheduler project.
 
 DEBUG = True
@@ -63,12 +64,13 @@ STATIC_ROOT = ''
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
 
+if node() 
 # Additional locations of static files
 STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    '/Users/deloschang/Documents/self_projects/auto_class_scheduler/app/static/',
+    os.environ['AUTO_CLASS_STATIC']
 )
 
 # List of finder classes that know how to find static files in
@@ -108,7 +110,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    "/Users/deloschang/Documents/self_projects/auto_class_scheduler/auto_class_scheduler/static/templates"
+    os.environ['AUTO_CLASS_TEMPLATE']
 )
 
 INSTALLED_APPS = (
@@ -129,7 +131,8 @@ INSTALLED_APPS = (
 
 # social_auth dependencies
 GOOGLE_OAUTH_EXTRA_SCOPE = ['https://www.googleapis.com/auth/calendar']
-GOOGLE_OAUTH2_CLIENT_ID      = '876852773074-2o3184hkpdchil2q6m899s4aatguna39.apps.googleusercontent.com'
+GOOGLE_OAUTH2_CLIENT_ID      = os.environ['GOOGLE_CLIENT']  # set
+GOOGLE_OAUTH2_CLIENT_SECRET  = os.environ['GOOGLE_CLIENT_SECRET']
 
 LOGIN_URL          = '/'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/logged-in/'
@@ -232,3 +235,6 @@ DATABASES['default'] =  dj_database_url.config()
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# manual override of os environs
+#from settings_local import *
