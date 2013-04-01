@@ -24,14 +24,20 @@ from django.utils.html import strip_tags # sanitize
 
 
 def home(request):
-    return render_to_response("main.html")
+    try: 
+        link = UserSocialAuth.get_social_auth_for_user(request.user).get().tokens
+        access_token = link['access_token']
+
+        return render_to_response("logged-in.html", {'access_token': access_token}, RequestContext(request))
+
+    except:
+        return render_to_response("main.html", RequestContext(request))
 
 @login_required
 def loggedin(request):
-    link = UserSocialAuth.get_social_auth_for_user(request.user).get().tokens
+    try: 
+        link = UserSocialAuth.get_social_auth_for_user(request.user).get().tokens
 
-    # retrieve the token first 
-    if 'access_token' in link:
         access_token = link['access_token']
 
         # OAuth dance
@@ -78,7 +84,7 @@ def loggedin(request):
         #print "Created Event: %s" % created_event['id']
         return render_to_response("logged-in.html", {'access_token': access_token}, RequestContext(request))
 
-    else: 
+    except: 
         return render_to_response("main.html", RequestContext(request))
 
 def tutorial_class_input(request):
