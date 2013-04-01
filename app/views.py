@@ -118,6 +118,7 @@ def scraper(request):
     return render_to_response("scraper.html", {'soup': soup})
 
 # tidying: http://valet.htmlhelp.com/tidy/tidy.cgi
+# scrapes the course listing
 def scraper2(request):
     #url = 'http://oracle-www.dartmouth.edu/dart/groucho/timetable.display_courses'
     #parameters = 'crnl=no_value&distribradio=alldistribs&depts=no_value&periods=no_value&distribs=no_value&distribs_i=no_value&distribs_wc=no_value&pmode=public&term=&levl=&fys=n&wrt=n&pe=n&review=n&classyear=2008&searchtype=Subject+Area%28s%29&termradio=selectterms&terms=no_value&terms=201303&subjectradio=allsubjects&hoursradio=allhours&sortorder=dept'
