@@ -1,11 +1,244 @@
-You're logged in!
-
 {% extends 'base.html' %}
 
 
 {% block content %}
-  <div>
-    Token if successful:
-    {{ access_token }}
-  </div>
+<div id="top_container">
+
+
+  <span id="logo_tutorial"><img src="{{ STATIC_URL }}images/intro_logo.png"/></span>
+
+  <p id="top_instruction" class="lead">Welcome!</p>
+
+
+  <p id="lower_instruction" class="text-info" style="padding-top:10px;">Timely is a new way to schedule courses</p>
+  <div id="second_lower_instruction" class="text-info" style="display:none; margin-top:-10px;"><strong>Auto-schedule</strong> your courses to your calendar</div>
+
+  <a href="javascript:;" id="start_me" class="btn btn-success">Let's start</a>
+
+  <!--<div id="friend_div" style="display:none;">-->
+    <!--<form action="{ url webapp_helloworld_create %}" method="post" id="friend_form" class="form_search">-->
+      <!--{% csrf_token %}-->
+      <!--<div class="input-append">-->
+        <!--<input name='friend_name' class="input-large" style="width:200px;" type="text" placeholder="Friend's name" id="autocomplete-input" />-->
+        <!--<input type="hidden" name='hash' id='hash' value=''/>-->
+        <!--<input type="submit" id="createmyfirstalbum" class="btn btn-primary" value="Go!" />-->
+      <!--</div>-->
+    <!--</form>-->
+  <!--</div>-->
+
+  <!--<div id="albums_display" style="display:none; margin-bottom:25px; margin-left:175px;">-->
+    <!--<div id="my_first_album_title" class="experiences_list" style="font-size:18px; padding-bottom:15px;"></div>-->
+    <!--<img src="{{ STATIC_URL }}/images/memeja_logo.png" class="experiences_list" id="{{ first_friend_experience.pk }}" style="height:100px;"/>-->
+  <!--</div>-->
+  <!--<div class="left_arrow_box" style="display:none; width:100px; height:75px; position:relative; bottom:145px; left:330px;">-->
+    <!--<h3 class="text_in_arrow">Drop here</h3>-->
+  <!--</div>-->
+
+  <!--<div>-->
+    <!--<p class="lead" id="letsinvitehelper" style="display:none; margin-top:-20px;">Try drag-n-dropping stories into your album. </p>-->
+    <!--<a href="javascript:;" id="nextstep" style="display:none;" class="btn btn-success">Yes, I'm done <i class="icon-white icon-ok"></i></a>-->
+  <!--</div>-->
+
+  <!--[> facebook2 asks for 2nd step permission with publish_stream <]-->
+  <!--<span style="display:none;" id="letsinvite">-->
+    <!--<a href="{ url socialauth_begin 'facebook2' %}" class="btn btn-primary" style="margin-bottom:5px;">Invite my friend <i class="icon-white icon-ok"></i></a>-->
+    <!--<div class="text-info">We will never post without your permission.</div>-->
+  <!--</span>-->
+
+  <style>
+
+.uncatmemesbreak img{
+  display: block;
+  width: 200px;
+
+}
+
+.text_in_arrow{
+  color: white;
+  text-align: center;
+  font-size: 27px;
+  line-height: 27px;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.arrow_box {
+  position: relative;
+  background: #88b7d5;
+  border: 4px solid #c2e1f5;
+}
+.arrow_box:after, .arrow_box:before {
+  left: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.arrow_box:after {
+  border-color: rgba(136, 183, 213, 0);
+  border-left-color: #88b7d5;
+  border-width: 30px;
+  top: 50%;
+  margin-top: -30px;
+}
+.arrow_box:before {
+  border-color: rgba(194, 225, 245, 0);
+  border-left-color: #c2e1f5;
+  border-width: 36px;
+  top: 50%;
+  margin-top: -36px;
+}
+
+
+.left_arrow_box {
+  position: relative;
+  background: #88b7d5;
+  border: 4px solid #c2e1f5;
+}
+.left_arrow_box:after, .arrow_box:before {
+  right: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.left_arrow_box:after {
+  border-color: rgba(136, 183, 213, 0);
+  border-right-color: #88b7d5;
+  border-width: 30px;
+  top: 50%;
+  margin-top: -30px;
+}
+.left_arrow_box:before {
+  border-color: rgba(194, 225, 245, 0);
+  border-right-color: #c2e1f5;
+  border-width: 36px;
+  top: 50%;
+  margin-top: -36px;
+}
+
+  </style>
+</div>
+
+<style>
+  html {
+    height: 100%;
+    background: url({{ STATIC_URL }}images/grey.png) repeat;
+  }
+
+  #top_container {
+    width:500px;
+    height:200px;
+    position:absolute;
+    left:50%;
+    top:50%;
+    margin:-250px 0 0 -250px;
+  }
+
+  .tutmemes{
+    display: block;
+    float: left;
+    padding:5px;
+    margin: 5px;
+    border:0 0 1px solid #ACACA5;
+    box-shadow:0 0 10px #ACACA5;
+    background-color:white;
+    /*width: 420px;*/
+    /*margin: 5px;*/
+  }
+
+  .tutmemes a img{
+    display: block;
+    width: 200px;
+
+  }
+
+  #album_list{
+    width: 1000px;
+    right: 200px;
+  }
+  /* limits the number of people */
+   .ui-autocomplete {
+        max-height: 200px;
+        width:100px;
+        overflow-y: auto;
+        /* prevent horizontal scrollbar */
+        overflow-x: hidden;
+        /* add padding to account for vertical scrollbar */
+    } 
+    .ui-menu-item {
+      height:55px;
+    }
+    .ui-state-hover, .ui-autocomplete li:hover
+      {
+        display:none;
+      }
+</style>
+
+{{ standard_js }}
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
+<script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+<script>
+{# functions needs to be written inline because of access_token parameter #}
+$(function() {
+      $( "#autocomplete-input" ).autocomplete({
+        source: function( request, response ) {
+        var url = "https://graph.facebook.com/me/friends?access_token={{ access_token }}&callback=?";
+        $.ajax({
+          url: url,
+          dataType: "jsonp",
+          data: {
+            featureClass: "P",
+            style: "full",
+            name_startsWith: request.term
+          },
+          success: function( data ) {
+            res = $.map( data.data, function( item ) {
+              if (item.name.toLowerCase().indexOf(request.term.toLowerCase()) >= 0){
+                return {
+                  label: item.name,
+                  value: item.name,
+                  picture: item.id
+                }
+              }
+            });
+            response(res);
+          }
+        });
+      },
+      autoFocus:true,
+      minLength: 0,
+      select: function( event, ui ) {
+        var selectedObj = ui.item;
+        $('#hash').val(selectedObj.picture); // id
+        // log( ui.item ?
+        //   "Selected: " + ui.item.label :
+        //   "Nothing selected, input was " + this.value);
+      },
+      open: function() {
+        $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+      },
+      close: function() {
+        $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+      }
+      });
+    $("#autocomplete-input").data("autocomplete")._renderItem =  function( ul, item ) {
+        var image_url = "http://graph.facebook.com/" + item.picture +"/picture";
+
+        return $( "<li>" )
+          .append($("<img style='float:left'>").attr('src',image_url))
+          .append( $( "<a>" ).text( item.label ) )
+          .appendTo( ul );
+    }
+    });
+</script>
+
 {% endblock %}
