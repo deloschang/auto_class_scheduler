@@ -3,9 +3,31 @@
 {% block content %}
 
 <p id="top_instruction" class="lead">
-  Hooray! We scheduled {{ class_name }} for you @ period {{ period }}!
+  We scheduled {{ class_name }} for you @ period {{ period }}!
 </p>
 
-<a href="{% url 'home' %}" id="start_me" class="btn btn-success"> Schedule another class</a>
+<!-- Schedule another at end.
+<a href="{% url 'home' %}" id="continue" class="btn btn-success"> Schedule another class</a>
+-->
+
+<a href="javascript:;" id="start_gathering" class="btn btn-primary">Gather class information</a>
+
+<!-- modifications -->
+<div id="gathering" class="lead" style="display:none;">
+  Gathering information
+</div>
+
+
+
+<script>
+
+  $('#start_gathering').live('click', function(){
+    $('#top_instruction').fadeOut('medium', function(){
+      $('#start_gathering').hide();
+      $('#gathering').fadeIn('slow');
+    });
+  });
+
+</script>
 
 {% endblock %}

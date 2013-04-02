@@ -9,12 +9,14 @@
 
 <body>
 
-  {% block logo %}
-    <span id="logo_tutorial"><img src="{{ STATIC_URL }}images/intro_logo.png" style="width: 600px;"></span>
-  {% endblock %}
-
-  {% block content %}
-  {% endblock %}
+  <div id="center_content" style="margin-top:200px;">
+    {% block logo %}
+      <span id="logo_tutorial"><img src="{{ STATIC_URL }}images/intro_logo.png" style="width: 600px;"></span>
+    {% endblock %}
+  
+    {% block content %}
+    {% endblock %}
+  </div>
 
 </body>
 

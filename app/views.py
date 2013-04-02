@@ -42,10 +42,10 @@ def loggedin(request):
         access_token = link['access_token']
 
         # OAuth dance
-        credentials = AccessTokenCredentials(access_token, 'my-user-agent/1.0')
-        http = httplib2.Http()
-        http = credentials.authorize(http)
-        service = build('calendar', 'v3', http=http)
+        #credentials = AccessTokenCredentials(access_token, 'my-user-agent/1.0')
+        #http = httplib2.Http()
+        #http = credentials.authorize(http)
+        #service = build('calendar', 'v3', http=http)
 
 
         # Snippet that lists all calendar events
@@ -70,12 +70,12 @@ def loggedin(request):
                #'the application to re-authorize')
 
         # working event
-        event = {
-          'summary': "summary",
-          'description': "description",
-          'start' : { 'dateTime' : "2013-04-01T15:00:00.000Z"},
-          'end' : { 'dateTime' : "2013-04-01T17:00:00.000Z"}
-        }
+        #event = {
+          #'summary': "summary",
+          #'description': "description",
+          #'start' : { 'dateTime' : "2013-04-01T15:00:00.000Z"},
+          #'end' : { 'dateTime' : "2013-04-01T17:00:00.000Z"}
+        #}
 
 
         #payload = json.dumps(event)
@@ -99,13 +99,16 @@ def tutorial_class_input(request):
 
         # scrape for the class period
         user = request.user
-        period = find_class_period(dept_abbr, coursenum)
+        response = find_class_period(dept_abbr, coursenum)
+
+        period = response[0]
+        class_title = response[1]
 
         # found class time, now process and add to the calendar
         insert_to_calendar(user, class_name, period)
 
 
-        return render_to_response("confirmation.html", {'class_name':class_name, 'period':period}, RequestContext(request))
+        return render_to_response("confirmation.html", {'class_name':class_name, 'period':period, 'class_title':class_title}, RequestContext(request))
 
 
 # user to schedule for
@@ -146,6 +149,7 @@ def insert_to_calendar(user, class_name, period):
       #],
     #}
 
+    # insert class
     event = {
       'summary': class_name,
       'description': class_name,
@@ -162,12 +166,12 @@ def insert_to_calendar(user, class_name, period):
       ],
     }
 
-    print event
-    created_event = service.events().insert(calendarId='primary', body=event).execute()
-
-    print "Created Event: %s" % created_event['id']
+    #created_event = service.events().insert(calendarId='primary', body=event).execute()
+    #print "Created Event: %s" % created_event['id']
 
 def check_period_time(period):
+    # maybe parse from the link in the future?
+
     response = []
 
     period = period.encode('utf-8')
@@ -232,6 +236,8 @@ def check_period_time(period):
 
 # helper that scrapes for the class period
 def find_class_period(dept_abbr, course_num):
+    response = []
+
     # define
     post_data = {
             'classyear' : '2008', # why??
@@ -260,13 +266,19 @@ def find_class_period(dept_abbr, course_num):
         period = cells[7].contents[0].contents[0]
     except AttributeError:
         period = cells[7].contents[0]
+
+    class_name = cells[5].contents[0]
     
     #enrolled = int(cells[-2].contents[0])
     #capacity = int(cells[-3].contents[0])
     #available = capacity - enrolled
     #print "%i spaces left (capacity of %i with %i enrolled)" % (available, capacity, enrolled)
 
-    return period
+    response.insert(0, period)
+    response.insert(1, class_name)
+
+
+    return response
     
 
 
