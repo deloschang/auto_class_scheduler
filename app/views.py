@@ -150,15 +150,15 @@ def insert_to_calendar(user, class_name, period):
       'summary': class_name,
       'description': class_name,
       'start' : { 
-          'dateTime' : "2013-04-01T"+response[1],
+          'dateTime' : "2013-03-25T"+response[1],
           'timeZone' : "America/New_York"
       },
       'end' : { 
-          'dateTime' : "2013-04-01T"+response[2],
+          'dateTime' : "2013-03-25T"+response[2],
           'timeZone' : "America/New_York"
       },
       'recurrence' : [
-          'RRULE:FREQ=WEEKLY;BYDAY='+response[0]+';UNTIL=20130603',
+          'RRULE:FREQ=WEEKLY;BYDAY='+response[0]+';UNTIL=20130529',
       ],
     }
 
