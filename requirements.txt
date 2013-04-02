@@ -8,3 +8,4 @@ psycopg2==2.4.6
 python-gflags==2.0
 python-openid==2.2.5
 wsgiref==0.1.2
+beautifulsoup4==4.1.3
