@@ -267,7 +267,7 @@ def find_class_period(dept_abbr, course_num):
     except AttributeError:
         period = cells[7].contents[0]
 
-    class_name = cells[5].contents[0]
+    class_name = cells[5].contents[0].contents[0].encode('utf-8')
     
     #enrolled = int(cells[-2].contents[0])
     #capacity = int(cells[-3].contents[0])

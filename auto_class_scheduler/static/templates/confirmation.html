@@ -3,18 +3,23 @@
 {% block content %}
 
 <p id="top_instruction" class="lead">
-  We scheduled {{ class_name }} for you @ period {{ period }}!
+  {{ class_name }} scheduled for period {{ period }}!
 </p>
 
 <!-- Schedule another at end.
 <a href="{% url 'home' %}" id="continue" class="btn btn-success"> Schedule another class</a>
 -->
 
-<a href="javascript:;" id="start_gathering" class="btn btn-primary">Gather class information</a>
+<p id="lower_instruction" class="text-info" style="padding-top:10px;">Timely calculates how long future assignments take</p>
+<a href="javascript:;" id="start_gathering" class="btn btn-success">Estimate</a>
 
 <!-- modifications -->
 <div id="gathering" class="lead" style="display:none;">
-  Gathering information
+  Finding {{ class_title }} 
+  <div id="loading">
+    <img src="{{ STATIC_URL }}images/ajax-loader.gif">
+  </div>
+
 </div>
 
 
@@ -23,6 +28,7 @@
 
   $('#start_gathering').live('click', function(){
     $('#top_instruction').fadeOut('medium', function(){
+      $('#lower_instruction').hide();
       $('#start_gathering').hide();
       $('#gathering').fadeIn('slow');
     });
