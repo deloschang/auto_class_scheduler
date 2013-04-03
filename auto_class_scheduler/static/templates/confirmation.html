@@ -42,13 +42,13 @@
     $('#top_instruction').fadeOut('medium', function(){
       $('#lower_instruction').hide();
       $('#start_gathering').hide();
-      $('#gathering').fadeIn('slow').delay(1000).queue(function(){
+      $('#gathering').fadeIn('slow').delay(2000).queue(function(){
         $('#gathering_text').html('Finding {{ class_name }} Syllabus').delay(1000).queue(function(){
           $('#gathering_text').html('Parsing Information');
           $(this).dequeue();
         });
-        $('#gathering_text').delay(2000).fadeOut('fast', function(){
-          $('#finish_text').show().delay(1000).queue(function(){
+        $('#gathering_text').delay(3000).fadeOut('fast', function(){
+          $('#finish_text').show().delay(2000).queue(function(){
             $('#finish_text').html('Referencing resources').delay(1000).queue(function(){
               $('#finish_text').html('Generating data..').delay(2000).queue(function(){
                 $('#finish_text').hide();
