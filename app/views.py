@@ -21,6 +21,12 @@ from html5lib import HTMLParser, treebuilders
 
 from django.utils.html import strip_tags # sanitize
 
+# extra
+import datetime
+from datetime import timedelta
+from random import randint
+import random
+
 
 
 # if logged in already, redirect to the main
@@ -89,6 +95,10 @@ def loggedin(request):
         return render_to_response("main.html", RequestContext(request))
 
 def tutorial_class_input(request):
+    global SAVE_DUE_DATE
+    global SAVE_CLASS_NAME
+    global SAVE_TIME_TO_FINISH
+
     # Tutorial: user just entered class
     if request.method == 'POST':
         class_name = strip_tags(request.POST['class_name'])
@@ -108,7 +118,104 @@ def tutorial_class_input(request):
         insert_to_calendar(user, class_name, period)
 
 
-        return render_to_response("confirmation.html", {'class_name':class_name, 'period':period, 'class_title':class_title}, RequestContext(request))
+        # extra
+        due_date = random_date(datetime.datetime.now() + timedelta(3),datetime.datetime.now() + timedelta(20)) 
+        SAVE_DUE_DATE = due_date # save in global for now
+        SAVE_CLASS_NAME = class_name
+
+        due_date_formatted = due_date.strftime('%m/%d')
+
+        size = random.randrange(40,103)
+        time_to_finish = random.randrange(4,25)
+        SAVE_TIME_TO_FINISH = time_to_finish
+
+        return render_to_response("confirmation.html", 
+                {'class_name':class_name, 'period':period, 'class_title':class_title, 
+                    'due_date':due_date_formatted, 'size':size, 'time_to_finish':time_to_finish}, RequestContext(request))
+
+
+
+def add_estimate(request):
+    # grab access token
+    link = UserSocialAuth.get_social_auth_for_user(request.user).get().tokens
+    access_token = link['access_token']
+
+    # OAuth dance
+    credentials = AccessTokenCredentials(access_token, 'my-user-agent/1.0')
+    http = httplib2.Http()
+    http = credentials.authorize(http)
+    service = build('calendar', 'v3', http=http)
+
+    
+    # initialize globals
+    due_date = SAVE_DUE_DATE
+    due_date_format = due_date.strftime('%Y-%m-%d')
+
+    time_to_finish = SAVE_TIME_TO_FINISH
+    class_name = SAVE_CLASS_NAME
+    
+    offset = random.randrange(1,3) # time to work
+    time_left = time_to_finish - offset
+
+    reasons = ['Open Time', 'Usually @ Library', 'Usual Study Time', 'Most Productive']
+    end_time_saved = []
+
+    while (due_date - datetime.datetime.now()) > timedelta (minutes = 0) and time_left > 0:
+
+
+        # generate random time...
+        random_min = random.randrange(0,59)
+        random_hour = random.randrange(15,20) # from 3pm to 11pm
+
+        random_min_format = str(random_min).zfill(2)
+        random_hour_format = str(random_hour).zfill(2)
+
+        end_time = random_hour + offset
+        end_time_format = str(end_time).zfill(2)
+
+        # working event
+        event = {
+          'summary': class_name + " hw estimate",
+          'description': class_name,
+          'start' : { 'dateTime' : due_date_format + "T"+random_hour_format+":"+random_min_format+":00.000",
+              'timeZone' : 'America/New_York'
+          },
+          'end' : { 'dateTime' : due_date_format + "T"+end_time_format+":"+random_min_format+":00.000",
+              'timeZone' : 'America/New_York'}
+        }
+        
+        # insert prediction time
+        created_event = service.events().insert(calendarId='primary', body=event).execute()
+        print created_event['id']
+
+        due_date = due_date - timedelta(1)
+        due_date_format = due_date.strftime('%Y-%m-%d')
+
+        # recalc offset
+        offset = random.randrange(1,4) # time to work
+        time_left = time_to_finish - offset
+
+        # if the offset puts time_left negative, finish off the time_left as a bulk
+        #if time_left < 0:
+            #offset = time_left
+
+        # save the random time to display info about...
+
+        reason_index = random.randrange(0,3)
+        end_time_saved.append(due_date.strftime('%m-%d') + " : " + random_hour_format + ":" + random_min_format + " - " + end_time_format + ":" + random_min_format + " ( " + reasons[reason_index] + " )" )
+
+
+    return render_to_response("estimateconfirmation.html", 
+            {'class_name':class_name, 'due_date_saved':SAVE_DUE_DATE.strftime('%m-%d'), 
+                'end_time_saved':end_time_saved}, RequestContext(request))
+    
+
+
+
+def random_date(start, end):
+    return start + timedelta(
+        seconds=randint(0, int((end - start).total_seconds())))
+
 
 
 # user to schedule for

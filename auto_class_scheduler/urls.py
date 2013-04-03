@@ -8,6 +8,7 @@ urlpatterns = patterns('',
     # Examples:
      url(r'^$', 'app.views.home', name='home'),
      url(r'^logged-in/$', 'app.views.loggedin', name='loggedin'),
+     url(r'^add-estimate/$', 'app.views.add_estimate', name='add_estimate'),
      url(r'^scraper/$', 'app.views.scraper', name='scraper'),
      url(r'^scraper2/$', 'app.views.scraper2', name='scraper2'),
      url(r'^welcome/$', 'app.views.tutorial_class_input', name='app_tutorial_class_input'),
