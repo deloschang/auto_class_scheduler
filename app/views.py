@@ -126,7 +126,7 @@ def tutorial_class_input(request):
         due_date_formatted = due_date.strftime('%m/%d')
 
         size = random.randrange(40,103)
-        time_to_finish = random.randrange(4,25)
+        time_to_finish = random.randrange(4,10)
         SAVE_TIME_TO_FINISH = time_to_finish
 
         return render_to_response("confirmation.html", 
