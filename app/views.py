@@ -273,8 +273,8 @@ def insert_to_calendar(user, class_name, period):
       ],
     }
 
-    #created_event = service.events().insert(calendarId='primary', body=event).execute()
-    #print "Created Event: %s" % created_event['id']
+    created_event = service.events().insert(calendarId='primary', body=event).execute()
+    print "Created Event: %s" % created_event['id']
 
 def check_period_time(period):
     # maybe parse from the link in the future?
