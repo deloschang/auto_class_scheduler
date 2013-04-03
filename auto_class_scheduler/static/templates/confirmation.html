@@ -15,7 +15,7 @@
 
 <!-- modifications -->
 <div id="gathering" class="lead" style="display:none;">
-  Finding {{ class_title }} 
+  <span id="gathering_text">Finding {{ class_title }} </span>
   <div id="loading">
     <img src="{{ STATIC_URL }}images/ajax-loader.gif">
   </div>
@@ -30,7 +30,10 @@
     $('#top_instruction').fadeOut('medium', function(){
       $('#lower_instruction').hide();
       $('#start_gathering').hide();
-      $('#gathering').fadeIn('slow');
+      $('#gathering').fadeIn('slow').delay(4000).queue(function(){
+        $('#gathering_text').html('Parsing syllabus');
+      });
+      // add further stuff
     });
   });
 
