@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<p id="top_instruction" class="lead text-info">
+  Summary for {{ class_name }} due {{ due_date_saved }} 
+</p>
+
+<div>
+  {% for end_time in end_time_saved %}
+    <div> {{ end_time }} </div>
+  {% endfor %}
+</div>
+
+
+
+
+
+{% endblock %}
