@@ -193,7 +193,7 @@ def add_estimate(request):
 
         # recalc offset
         offset = random.randrange(1,4) # time to work
-        time_left = time_to_finish - offset
+        time_left -= offset
 
         # if the offset puts time_left negative, finish off the time_left as a bulk
         #if time_left < 0:
