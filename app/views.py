@@ -148,7 +148,7 @@ def add_estimate(request):
 
     
     # initialize globals
-    due_date = SAVE_DUE_DATE
+    due_date = SAVE_DUE_DATE - timedelta(1)
     due_date_format = due_date.strftime('%Y-%m-%d')
 
     time_to_finish = SAVE_TIME_TO_FINISH
