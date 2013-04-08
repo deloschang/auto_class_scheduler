@@ -6,66 +6,64 @@
   {{ class_name }} scheduled for period {{ period }}!
 </p>
 
-<!-- Schedule another at end.
 <a href="{% url 'home' %}" id="continue" class="btn btn-success"> Schedule another class</a>
--->
 
-<p id="lower_instruction" class="text-info" style="padding-top:10px;">Timely calculates how long future assignments take</p>
-<a href="javascript:;" id="start_gathering" class="btn btn-success">Estimate</a>
+<!--<p id="lower_instruction" class="text-info" style="padding-top:10px;">Timely calculates how long future assignments take</p>-->
+<!--<a href="javascript:;" id="start_gathering" class="btn btn-success">Estimate</a>-->
 
-<!-- modifications -->
-<div id="gathering" class="lead" style="display:none;">
-  <span id="gathering_text" class="text-info">Finding {{ class_title }} </span>
-  <span id="finish_text" class="text-info" style="display:none;">Finding Assignments</span>
-  <div id="loading">
-    <img src="{{ STATIC_URL }}images/ajax-loader.gif">
-  </div>
-  <div id="final_data" style="display:none;">
-    <span class=""> Next assignment due {{ due_date }} </span>
-    <div class="text-info" style="margin-top:20px;">
-      {{ size }} students spent avg. <strong>{{ time_to_finish }} </strong> hrs to finish.
-    </div>
-    <div style="margin-top:10px;">
-      <a href="{% url 'add_estimate' %}" id="add_estimate" class="btn btn-success">Est. to Calendar</a>
-    </div>
-
-
-  </div>
-
-</div>
+<!--[> modifications <]-->
+<!--<div id="gathering" class="lead" style="display:none;">-->
+  <!--<span id="gathering_text" class="text-info">Finding {{ class_title }} </span>-->
+  <!--<span id="finish_text" class="text-info" style="display:none;">Finding Assignments</span>-->
+  <!--<div id="loading">-->
+    <!--<img src="{{ STATIC_URL }}images/ajax-loader.gif">-->
+  <!--</div>-->
+  <!--<div id="final_data" style="display:none;">-->
+    <!--<span class=""> Next assignment due {{ due_date }} </span>-->
+    <!--<div class="text-info" style="margin-top:20px;">-->
+      <!--{{ size }} students spent avg. <strong>{{ time_to_finish }} </strong> hrs to finish.-->
+    <!--</div>-->
+    <!--<div style="margin-top:10px;">-->
+      <!--<a href="{% url 'add_estimate' %}" id="add_estimate" class="btn btn-success">Est. to Calendar</a>-->
+    <!--</div>-->
 
 
+  <!--</div>-->
 
-<script>
+<!--</div>-->
 
-  $('#start_gathering').live('click', function(){
-    $('#top_instruction').fadeOut('medium', function(){
-      $('#lower_instruction').hide();
-      $('#start_gathering').hide();
-      $('#gathering').fadeIn('slow').delay(2000).queue(function(){
-        $('#gathering_text').html('Finding {{ class_name }} Syllabus').delay(1000).queue(function(){
-          $('#gathering_text').html('Parsing Information');
-          $(this).dequeue();
-        });
-        $('#gathering_text').delay(3000).fadeOut('fast', function(){
-          $('#finish_text').show().delay(2000).queue(function(){
-            $('#finish_text').html('Referencing resources').delay(1000).queue(function(){
-              $('#finish_text').html('Generating data..').delay(2000).queue(function(){
-                $('#finish_text').hide();
-                $('#loading').hide();
-                $('#final_data').slideDown('slow');
-                $(this).dequeue();
-              });
-              $(this).dequeue();
-            });
-            $(this).dequeue();
-          });
-        });
-        $(this).dequeue();
-      });
-    });
-  });
 
-</script>
+
+<!--<script>-->
+
+  <!--$('#start_gathering').live('click', function(){-->
+    <!--$('#top_instruction').fadeOut('medium', function(){-->
+      <!--$('#lower_instruction').hide();-->
+      <!--$('#start_gathering').hide();-->
+      <!--$('#gathering').fadeIn('slow').delay(2000).queue(function(){-->
+        <!--$('#gathering_text').html('Finding {{ class_name }} Syllabus').delay(1000).queue(function(){-->
+          <!--$('#gathering_text').html('Parsing Information');-->
+          <!--$(this).dequeue();-->
+        <!--});-->
+        <!--$('#gathering_text').delay(3000).fadeOut('fast', function(){-->
+          <!--$('#finish_text').show().delay(2000).queue(function(){-->
+            <!--$('#finish_text').html('Referencing resources').delay(1000).queue(function(){-->
+              <!--$('#finish_text').html('Generating data..').delay(2000).queue(function(){-->
+                <!--$('#finish_text').hide();-->
+                <!--$('#loading').hide();-->
+                <!--$('#final_data').slideDown('slow');-->
+                <!--$(this).dequeue();-->
+              <!--});-->
+              <!--$(this).dequeue();-->
+            <!--});-->
+            <!--$(this).dequeue();-->
+          <!--});-->
+        <!--});-->
+        <!--$(this).dequeue();-->
+      <!--});-->
+    <!--});-->
+  <!--});-->
+
+<!--</script>-->
 
 {% endblock %}
