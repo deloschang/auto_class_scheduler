@@ -109,7 +109,10 @@ def tutorial_class_input(request):
 
         # scrape for the class period
         user = request.user
-        response = find_class_period(dept_abbr, coursenum)
+        try:
+            response = find_class_period(dept_abbr, coursenum)
+        except:
+            return HttpResponse('Invalid class! Please enter full dept name and number. E.g.: COSC 050')
 
         period = response[0]
         class_title = response[1]
