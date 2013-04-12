@@ -102,14 +102,14 @@ def tutorial_class_input(request):
     # Tutorial: user just entered class
     if request.method == 'POST':
         class_name = strip_tags(request.POST['class_name'])
-        info = class_name.split(' ')
-
-        dept_abbr = info[0]
-        coursenum = info[1]
-
-        # scrape for the class period
-        user = request.user
         try:
+            info = class_name.split(' ')
+
+            dept_abbr = info[0]
+            coursenum = info[1]
+
+            # scrape for the class period
+            user = request.user
             response = find_class_period(dept_abbr, coursenum)
         except:
             return HttpResponse('Invalid class! Please enter full dept name and number. E.g.: COSC 050')
