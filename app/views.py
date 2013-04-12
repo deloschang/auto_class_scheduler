@@ -112,7 +112,8 @@ def tutorial_class_input(request):
             user = request.user
             response = find_class_period(dept_abbr, coursenum)
         except:
-            return HttpResponse('Invalid class! Please enter full dept name and number. E.g.: COSC 050')
+            error = 'Invalid class! Please enter full dept name and number. E.g.: COSC 050'
+            return render_to_response("logged-in.html", {'error':error}, RequestContext(request))
 
         period = response[0]
         class_title = response[1]
