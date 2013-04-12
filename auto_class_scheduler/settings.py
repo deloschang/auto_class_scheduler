@@ -2,7 +2,7 @@ import os
 
 # Django settings for auto_class_scheduler project.
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (

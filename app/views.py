@@ -27,6 +27,8 @@ from datetime import timedelta
 from random import randint
 import random
 
+from django.http import HttpResponse
+
 
 
 # if logged in already, redirect to the main
