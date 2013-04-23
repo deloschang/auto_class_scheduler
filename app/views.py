@@ -98,6 +98,7 @@ def tutorial_class_input(request):
     global SAVE_DUE_DATE
     global SAVE_CLASS_NAME
     global SAVE_TIME_TO_FINISH
+    global SIZE
 
     # Tutorial: user just entered class
     if request.method == 'POST':
@@ -155,10 +156,12 @@ def add_estimate(request):
     due_date = SAVE_DUE_DATE - timedelta(1)
     due_date_format = due_date.strftime('%Y-%m-%d')
 
+    size = SIZE
     time_to_finish = SAVE_TIME_TO_FINISH
     class_name = SAVE_CLASS_NAME
     
     offset = random.randrange(1,3) # time to work
+    assignment_number = random.randrange(2,5)
     time_left = time_to_finish - offset
 
     reasons = ['Open Time', 'Usually @ Library', 'Usual Study Time', 'Most Productive']
@@ -179,8 +182,8 @@ def add_estimate(request):
 
         # working event
         event = {
-          'summary': class_name + " hw estimate",
-          'description': class_name,
+          'summary': class_name + " Assignment " + assignment_number,
+          'description': size + " students spent avg. " + time_to_finish + " hrs to complete.",
           'start' : { 'dateTime' : due_date_format + "T"+random_hour_format+":"+random_min_format+":00.000",
               'timeZone' : 'America/New_York'
           },
