@@ -133,6 +133,7 @@ def tutorial_class_input(request):
         size = random.randrange(40,103)
         time_to_finish = random.randrange(4,10)
         SAVE_TIME_TO_FINISH = time_to_finish
+        SIZE = size
 
         return render_to_response("confirmation.html", 
                 {'class_name':class_name, 'period':period, 'class_title':class_title, 
