@@ -189,7 +189,8 @@ def add_estimate(request):
         }
         
         # insert prediction time
-        created_event = service.events().insert(calendarId='primary', body=event).execute()
+# demo: calendar ID for 'Estimates-Timely'
+        created_event = service.events().insert(calendarId='2i4qubb29vdurj8qntlklsdvp4@group.calendar.google.com', body=event).execute()
         print created_event['id']
 
         due_date = due_date - timedelta(1)
@@ -277,8 +278,14 @@ def insert_to_calendar(user, class_name, period):
       ],
     }
 
-    # calendar ID for "Classes - Timely"
-    created_event = service.events().insert(calendarId='hskbfmkfc5dhbb517ih1r11gjs@group.calendar.google.com', body=event).execute()
+    try: 
+        # demo: add to "Classes-Timely"
+        # calendar ID for "Classes - Timely"
+        created_event = service.events().insert(calendarId='hskbfmkfc5dhbb517ih1r11gjs@group.calendar.google.com', body=event).execute()
+    except:
+        # default to primary
+        created_event = service.events().insert(calendarId='primary', body=event).execute()
+
     print "Created Event: %s" % created_event['id']
 
 def check_period_time(period):
