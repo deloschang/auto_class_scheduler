@@ -162,7 +162,7 @@ def add_estimate(request):
     class_name = SAVE_CLASS_NAME
     
     offset = random.randrange(1,3) # time to work
-    assignment_number = random.randrange(2,5)
+    assignment_number = str(random.randrange(2,5))
     time_left = time_to_finish - offset
 
     reasons = ['Open Time', 'Usually @ Library', 'Usual Study Time', 'Most Productive']
