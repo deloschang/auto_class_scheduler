@@ -133,7 +133,7 @@ def tutorial_class_input(request):
         DUE_DATE = due_date_formatted
 
         size = random.randrange(40,103)
-        time_to_finish = random.randrange(4,10)
+        time_to_finish = random.randrange(2,5)
         SAVE_TIME_TO_FINISH = time_to_finish
         SIZE = str(size)
 
@@ -165,7 +165,7 @@ def add_estimate(request):
     event_due_date = str(DUE_DATE)
     
     offset = random.randrange(1,3) # time to work
-    assignment_number = str(random.randrange(2,5))
+    assignment_number = str(random.randrange(3,6))
     time_left = time_to_finish - offset
 
     reasons = ['Open Time', 'Usually @ Library', 'Usual Study Time', 'Most Productive']
