@@ -123,7 +123,7 @@ def tutorial_class_input(request):
 
 
         # extra
-        due_date = random_date(datetime.datetime.now() + timedelta(3),datetime.datetime.now() + timedelta(20)) 
+        due_date = random_date(datetime.datetime.now() + timedelta(2),datetime.datetime.now() + timedelta(5)) 
         SAVE_DUE_DATE = due_date # save in global for now
         SAVE_CLASS_NAME = class_name
 
