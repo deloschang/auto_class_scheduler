@@ -184,7 +184,7 @@ def add_estimate(request):
         # working event
         event = {
           'summary': class_name + " Assignment " + assignment_number,
-          'description': size + " students spent avg. " + time_to_finish + " hrs to complete.",
+          'description': size + " students spent avg. " + str(time_to_finish) + " hrs to complete.",
           'start' : { 'dateTime' : due_date_format + "T"+random_hour_format+":"+random_min_format+":00.000",
               'timeZone' : 'America/New_York'
           },
