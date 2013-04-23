@@ -162,7 +162,7 @@ def add_estimate(request):
     size = SIZE
     time_to_finish = SAVE_TIME_TO_FINISH
     class_name = SAVE_CLASS_NAME
-    due_date = str(DUE_DATE)
+    event_due_date = str(DUE_DATE)
     
     offset = random.randrange(1,3) # time to work
     assignment_number = str(random.randrange(2,5))
@@ -186,7 +186,7 @@ def add_estimate(request):
 
         # working event
         event = {
-          'summary': class_name + " Assignment " + assignment_number + " due " + due_date,
+          'summary': class_name + " Assignment " + assignment_number + " due " + event_due_date,
           'description': size + " students spent avg. " + str(time_to_finish) + " hrs to complete.",
           'start' : { 'dateTime' : due_date_format + "T"+random_hour_format+":"+random_min_format+":00.000",
               'timeZone' : 'America/New_York'
